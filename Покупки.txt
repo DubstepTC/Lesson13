@@ -1,0 +1,10 @@
+bread
+squash
+pumpkin
+window
+house
+computer
+mouse
+keybord
+button
+world

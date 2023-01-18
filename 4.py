@@ -2,9 +2,35 @@ from tkinter import *
 import calendar
 import datetime
 
+def rs():
+    win = Tk()
+    win.title('Расписание')
+    win.geometry("500x300")
+
+    fr_top = Frame(win)
+    fr_bot = Frame(win)
+
+    lb1 = Label(fr_top , text='День', width=10, height=2, justify="left", bg= 'lightgray')
+    lb2 = Label(fr_top , text='Событие', width=60, height=2, justify="left", bg= 'lightgray')
+    lb3 = Label(fr_bot, text='День', width=10, height=2, justify="left", bg= 'lightgray')
+    lb4 = Label(fr_bot, text='Событие', width=60, height=2, justify="left", bg= 'lightgray')
+
+    with open('buf.txt', "r", encoding="utf-8") as file:
+        lb = file.read().split(",")
+        v = lb[3].split("\n")
+        lb3["text"] = str(lb[0])
+        lb4["text"] = ''.join(v)
+    fr_top.pack()
+    lb1.pack(side=LEFT)
+    lb2.pack(side=LEFT)
+    fr_bot.pack()
+    lb3.pack(side=LEFT)
+    lb4.pack(side=LEFT)
+
 def zam():
     win = Tk()
     win.title('Создание заметки')
+
 
     def sz(event):
         z = [ent1.get(),ent2.get(),ent3.get(), text.get(1.0, END)]
@@ -29,7 +55,7 @@ def zam():
     ent1 = Entry(fr_midle, width=15, justify = "center", bg= 'lightgray')
     ent2 = Entry(fr_midle, width=15, justify = "center", bg= 'lightgray')
     ent3 = Entry(fr_midle, width=15, justify = "center", bg= 'lightgray')
-    text = Text(fr_midle,width=35, height=8, bg= 'lightgray')
+    text = Text(fr_midle,width=36, height=8, bg= 'lightgray')
 
     but_sz = Button(fr_bot,text="Создать", width=15, height=2)
     but_ot = Button(fr_bot,text="Отмена", width=15, height=2)
@@ -79,7 +105,6 @@ def fill():
         lb = file.read().split(",")
         z = lb[:-1]
         v = lb[3].split("\n")
-    print(z,v)
     if month == 1:
         prew_month_days = calendar.monthrange(year-1, 12)[1]
     else:
@@ -88,7 +113,7 @@ def fill():
     for n in range(month_days):
         days[n + week_day]['text'] = n + 1
         days[n + week_day]['fg'] = "black"
-        if (n + 1 == int(z[0])):
+        if (n + 1 == int(z[0]) and year == int(z[2]) and month == int(z[1])):
             days[n + week_day]['fg'] = "blue"
         if year == now.year and month == now.month and n == now.day:
             days[n + week_day]['background'] = 'green'
@@ -123,8 +148,10 @@ while True :
     but.grid(row=10, column=2, sticky='nsew')
     but = Button(root, text="Обновить", command=ob, width=15, height=2)
     but.grid(row=10, column=3, sticky='nsew')
-    but = Button(root, text="Закрыть", command=ex, width=15, height=2)
+    but = Button(root, text="Расписание", command=rs, width=15, height=2)
     but.grid(row=10, column=4, sticky='nsew')
+    but = Button(root, text="Закрыть", command=ex, width=15, height=2)
+    but.grid(row=10, column=6, sticky='nsew')
 
     for n in range(7):
         lbl = Label(root, text=calendar.day_abbr[n], width=6, height=1,

@@ -5,7 +5,7 @@ import datetime
 def rs():
     win = Tk()
     win.title('Расписание')
-    win.geometry("500x300")
+    win.geometry("500x70")
 
     fr_top = Frame(win)
     fr_bot = Frame(win)
@@ -14,17 +14,27 @@ def rs():
     lb2 = Label(fr_top , text='Событие', width=60, height=2, justify="left", bg= 'lightgray')
     lb3 = Label(fr_bot, text='День', width=10, height=2, justify="left", bg= 'lightgray')
     lb4 = Label(fr_bot, text='Событие', width=60, height=2, justify="left", bg= 'lightgray')
+    lb5 = Label(fr_top, text='Месяц', width=10, height=2, justify="left", bg='lightgray')
+    lb6 = Label(fr_bot, text='Событие', width=10, height=2, justify="left", bg='lightgray')
+    lb7 = Label(fr_top, text='Год', width=10, height=2, justify="left", bg='lightgray')
+    lb8 = Label(fr_bot, text='Событие', width=10, height=2, justify="left", bg='lightgray')
 
     with open('buf.txt', "r", encoding="utf-8") as file:
         lb = file.read().split(",")
         v = lb[3].split("\n")
         lb3["text"] = str(lb[0])
         lb4["text"] = ''.join(v)
+        lb6["text"] = calendar.month_name[month]
+        lb8["text"] = year
     fr_top.pack()
     lb1.pack(side=LEFT)
+    lb5.pack(side=LEFT)
+    lb7.pack(side=LEFT)
     lb2.pack(side=LEFT)
     fr_bot.pack()
     lb3.pack(side=LEFT)
+    lb6.pack(side=LEFT)
+    lb8.pack(side=LEFT)
     lb4.pack(side=LEFT)
 
 def zam():
